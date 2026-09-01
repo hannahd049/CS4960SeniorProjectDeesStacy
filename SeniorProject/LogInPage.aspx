@@ -48,6 +48,16 @@
 
             <br />
 
+            <div style="text-align:center;">
+                <asp:HyperLink 
+                    ID="lnkForgotPassword" 
+                    runat="server" 
+                    NavigateUrl="~/ForgotResetPassword.aspx"
+                    Text="Forgot your password?" />
+            </div>
+
+            <br />
+
             <asp:Label 
                 ID="lblMessage" 
                 runat="server" 
