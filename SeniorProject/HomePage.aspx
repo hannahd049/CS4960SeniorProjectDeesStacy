@@ -4,21 +4,21 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <link rel="stylesheet" href="StyleSheet.css" />
+    <title>Home Page</title>
+
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
             <div>
-                <asp:Label ID="greeting" runat="server" Text="Please Login or Sign Up"></asp:Label> <br />
-
-                <asp:Button ID="loginbutton" runat="server" Text="Login" OnClick="loginbutton_Click"></asp:Button><br />
-
-                <asp:Button ID="loginbutton2" runat="server" Text="Login" OnClick="loginbutton_Click"></asp:Button><br />
-
+            <asp:Label ID="greeting" runat="server" Text="Please Login or Sign Up"></asp:Label> <br />
+            <asp:Button ID="loginbutton" runat="server" Text="Login" OnClick="loginbutton_Click"></asp:Button><br />
+            <asp:Button ID="signupbutton" runat="server" Text="Sign Up" OnClick="signupbutton_Click" ></asp:Button><br />
+               
                 <div>
-                    <a href="Channels.aspx" class="nav-link">Channels</a>
-                    <a href="UserProfile.aspx" class="nav-link">Profile</a> 
+                    <a href="Channels.aspx" >Channels</a>
+                    <a href="UserProfile.aspx">Profile</a> 
                 </div>
 
             </div>
