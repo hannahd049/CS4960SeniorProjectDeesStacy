@@ -16,7 +16,22 @@ namespace SeniorProject
 
         protected void loginbutton_Click(object sender, EventArgs e)
         {
+            Response.Redirect("LogInPage.aspx");
+        }
 
+        protected void signupbutton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AccountRegistration.aspx");
         }
     }
-}
+}    
+
+
+
+
+
+
+
+
+
+
