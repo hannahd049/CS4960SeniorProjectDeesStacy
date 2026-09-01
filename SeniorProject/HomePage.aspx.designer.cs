@@ -42,12 +42,12 @@ namespace SeniorProject
         protected global::System.Web.UI.WebControls.Button loginbutton;
 
         /// <summary>
-        /// loginbutton control.
+        /// loginbutton2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button loginbutton;
+        protected global::System.Web.UI.WebControls.Button loginbutton2;
     }
 }
