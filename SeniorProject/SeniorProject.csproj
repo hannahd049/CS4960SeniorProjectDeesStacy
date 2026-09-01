@@ -72,6 +72,10 @@
     <Content Include="AccountSettings.aspx" />
     <Content Include="AdminModeration.aspx" />
     <Content Include="AdminProfile.aspx" />
+    <Content Include="App_Data\Users.mdf" />
+    <Content Include="App_Data\Users_log.ldf">
+      <DependentUpon>Users.mdf</DependentUpon>
+    </Content>
     <Content Include="Channels.aspx" />
     <Content Include="Chats.aspx" />
     <Content Include="EmailVerification.aspx" />
