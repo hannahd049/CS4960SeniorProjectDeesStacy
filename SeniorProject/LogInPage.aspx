@@ -44,6 +44,15 @@
                     OnClick="btnLogin_Click" 
                     Width="100%" />
             </div>
+                <br />
+                    <div style="text-align:center;">
+                    <asp:HyperLink 
+                    ID="lnkForgotPassword" 
+                    runat="server" 
+                    NavigateUrl="~/ForgotResetPassword.aspx"
+                    Text="Forgot your password?" />
+
+                </div>
 
             <br />
 
@@ -58,4 +67,3 @@
     </form>
 </body>
 </html>
-```

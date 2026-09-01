@@ -5,4 +5,8 @@ obj/
 *.suo
 *.cache
 *.log
-~$*
+~$
+
+*.mdf
+*.ldf
+App_Data/
