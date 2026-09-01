@@ -84,6 +84,7 @@
     <Content Include="SearchFunction.aspx" />
     <Content Include="StyleSheet.css" />
     <Content Include="Web.config" />
+    <Content Include="Welcome.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountRegistration.aspx.cs">
@@ -185,6 +186,13 @@
     </Compile>
     <Compile Include="SearchFunction.aspx.designer.cs">
       <DependentUpon>SearchFunction.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Welcome.aspx.cs">
+      <DependentUpon>Welcome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Welcome.aspx.designer.cs">
+      <DependentUpon>Welcome.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
