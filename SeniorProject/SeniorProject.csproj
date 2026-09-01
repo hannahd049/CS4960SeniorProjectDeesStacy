@@ -72,10 +72,6 @@
     <Content Include="AccountSettings.aspx" />
     <Content Include="AdminModeration.aspx" />
     <Content Include="AdminProfile.aspx" />
-    <Content Include="App_Data\Users.mdf" />
-    <Content Include="App_Data\Users_log.ldf">
-      <DependentUpon>Users.mdf</DependentUpon>
-    </Content>
     <Content Include="Channels.aspx" />
     <Content Include="Chats.aspx" />
     <Content Include="EmailVerification.aspx" />
@@ -86,6 +82,7 @@
     <Content Include="ReportUser.aspx" />
     <Content Include="OtherUsersProfiles.aspx" />
     <Content Include="SearchFunction.aspx" />
+    <Content Include="SignUpPage.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +184,13 @@
     </Compile>
     <Compile Include="SearchFunction.aspx.designer.cs">
       <DependentUpon>SearchFunction.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SignUpPage.aspx.cs">
+      <DependentUpon>SignUpPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SignUpPage.aspx.designer.cs">
+      <DependentUpon>SignUpPage.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
