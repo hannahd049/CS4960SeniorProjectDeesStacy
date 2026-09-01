@@ -16,9 +16,9 @@
             <asp:Button ID="loginbutton" runat="server" Text="Login" OnClick="loginbutton_Click"></asp:Button><br />
             <asp:Button ID="signupbutton" runat="server" Text="Sign Up" OnClick="signupbutton_Click" ></asp:Button><br />
                
-                <div>
-                    <a href="Channels.aspx" >Channels</a>
-                    <a href="UserProfile.aspx">Profile</a> 
+                <div class="nav-container">
+                    <a href="Channels.aspx" class="nav-link">Channels</a>
+                    <a href="UserProfile.aspx" class="nav-link">Profile</a>
                 </div>
 
             </div>
