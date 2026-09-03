@@ -1,140 +1,108 @@
-﻿body {
+﻿/* GENERAL */
+body {
     background-color: #f7dcdc;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* vertical centering */
-    align-items: center; /* horizontal centering */
-    height: 100vh; /* full screen height */
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
 }
-/* NAVIGATION BAR (if needed)*/
-.nav-container {
+
+
+/* =========================
+   WELCOME PAGE
+   ========================= */
+
+.welcome-container {
+    min-height: 100vh;
     display: flex;
     justify-content: center;
-    gap: 25px;
-    padding: 15px 20px;
-    margin: 0 auto;
-    width: fit-content;
-    border: 2px solid #3f8ca8;
-    border-radius: 10px;
-    background: #fff8e6;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    align-items: center;
 }
 
-.nav-link {
-    text-decoration: none;
-    color: #222;
-    font-size: 25px;
-    padding: 8px 12px;
-    position: relative;
-    transition: color 0.2s ease, transform 0.2s ease;
+
+/* WHITE LOGIN/SIGNUP BOX */
+.bubble-section {
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
 }
 
-    .nav-link::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -3px;
-        width: 0%;
-        height: 2px;
-        background: #3f8ca8;
-        transition: width 0.25s ease;
-    }
 
-    .nav-link:hover {
-        color: #3f8ca8;
-        transform: translateY(-2px);
-    }
+/* =========================
+   BUTTONS
+   ========================= */
 
-     .nav-link:hover::after {
-            width: 100%;
-    }
-/* BUTTONS */
-    .btn {
-        display: inline-block;
-        padding: 12px 26px;
-        background: #0078d4; /* Microsoft blue */
-        color: #fff;
-        font-size: 18px;
-        font-weight: 600;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: 0.2s ease;
-    }
+.btn {
+    display: block;
+    width: 150px;
+    margin: 12px auto;
+    padding: 14px 20px;
+    background-color: #F4C6D7 !important;
+    color: #5A3E46 !important;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.10);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
 
-        .btn:hover {
-            background: #005fa3;
-        }
-/* HOME PAGE */
-    .bubble-section {
-        background-color: #fff;
-        border-radius: 20px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        padding: 30px;
-        margin: 40px auto;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        height: auto;
+    .btn:hover {
+        background-color: #E8A9C0 !important;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 14px rgba(0,0,0,0.18);
     }
 
 
-        .bubble-section:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-        }
+/* =========================
+   HOME PAGE TOP MENU
+   ========================= */
 
-        .bubble-section h2 {
-            color: #a30000;
-            font-size: 28px;
-            margin-bottom: 16px;
-            border-bottom: 2px solid #f2bcbc;
-            display: inline-block;
-            padding-bottom: 4px;
-        }
-    }
-
-/* TOP MENU BAR */
 .top-menu {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px; 
-    background-color: #f7dcdc; 
+    height: 60px;
+    background-color: #f7dcdc;
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
     align-items: center;
-    justify-content: flex-start; 
-    gap: 20px; 
-    padding: 0 20px; 
-    z-index: 1000; 
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    z-index: 1000;
 }
 
+
     /* MENU LINKS */
+
     .top-menu a {
         text-decoration: none;
         color: #333;
         font-weight: 600;
         font-size: 18px;
-        padding: 8px 12px; 
-        transition: 0.2s;
+        padding: 8px 12px;
         border-radius: 4px;
+        transition: 0.2s ease;
     }
 
-        /* HOVER EFFECT */
         .top-menu a:hover {
             color: #a30000;
             background-color: #f2bcbc;
         }
 
-        /* DIVIDER LINE */
-        .top-line {
-            position: fixed;
-            top: 60px;
-            left: 0;
-            width: 100%; 
-            height: 2px;
-            background-color: #b88a8a;
-            z-index: 999;
-        }
+
+/* LINE UNDER MENU */
+
+.top-line {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #b88a8a;
+    z-index: 999;
+}
