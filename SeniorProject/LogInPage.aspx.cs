@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using System.Data.SqlClient;
 using System.Web.UI;
 
@@ -13,76 +12,68 @@ namespace SeniorProject
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            string email = txtUsername.Text.Trim();
+            lblUserError.Text = "";
+            lblPassError.Text = "";
+            lblMessage.Text = "";
+
+            string email = txtEmail.Text.Trim();
             string password = txtPassword.Text.Trim();
+
+            bool missingUsername = string.IsNullOrEmpty(email);
+            bool missingPassword = string.IsNullOrEmpty(password);
+
+            if (missingUsername)
+                lblUserError.Text = "Please enter your email.";
+
+            if (missingPassword)
+                lblPassError.Text = "Please enter your password.";
+
+            if (missingUsername || missingPassword)
+                return;
 
             string connectionString =
                 System.Configuration.ConfigurationManager
                 .ConnectionStrings["SeniorProjectConnection"]
                 .ConnectionString;
 
-            using (SqlConnection connection =
-                   new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
                 {
                     connection.Open();
 
-                    string query =
-                        "SELECT Role FROM Users " +
-                        "WHERE Email = @Email " +
-                        "AND Password = @Password";
+                    string query = "SELECT Password, Role FROM Users WHERE Email = @Email";
 
-                    using (SqlCommand command =
-                           new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue(
-                            "@Email", email);
+                        command.Parameters.AddWithValue("@Email", email);
 
-                        command.Parameters.AddWithValue(
-                            "@Password", password);
+                        SqlDataReader reader = command.ExecuteReader();
 
-                        object role = command.ExecuteScalar();
-
-                        if (role != null)
+                        if (!reader.HasRows)
                         {
-                            string userRole = role.ToString();
-
-                            lblMessage.ForeColor = Color.Green;
-                            lblMessage.Text = "Login successful!";
-
-                            if (userRole.Equals(
-                                "Admin",
-                                StringComparison.OrdinalIgnoreCase))
-                            {
-                                Response.Redirect("HomePage.aspx");
-                            }
-                            else if (userRole.Equals(
-                                "User",
-                                StringComparison.OrdinalIgnoreCase))
-                            {
-                                Response.Redirect("HomePage.aspx");
-                            }
-                            else
-                            {
-                                lblMessage.ForeColor = Color.Red;
-                                lblMessage.Text =
-                                    "Login successful, but your account has no valid role.";
-                            }
+                            lblUserError.Text = "Incorrect email.";
+                            return;
                         }
-                        else
+
+                        reader.Read();
+
+                        string storedPassword = reader["Password"].ToString();
+
+                        if (storedPassword != password)
                         {
-                            lblMessage.ForeColor = Color.Red;
-                            lblMessage.Text =
-                                "Invalid email or password.";
+                            lblPassError.Text = "Incorrect password.";
+                            return;
                         }
+
+                        lblMessage.ForeColor = System.Drawing.Color.Green;
+                        lblMessage.Text = "Login successful!";
+                        Response.Redirect("HomePage.aspx");
                     }
                 }
                 catch (Exception ex)
                 {
-                    lblMessage.ForeColor = Color.Red;
-                    lblMessage.Text =
-                        "Database error: " + ex.Message;
+                    lblMessage.Text = "Database error: " + ex.Message;
                 }
             }
         }
