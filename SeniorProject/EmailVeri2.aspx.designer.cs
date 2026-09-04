@@ -11,7 +11,7 @@ namespace SeniorProject
 {
 
 
-    public partial class AccountRegistration
+    public partial class EmailVeri2
     {
 
         /// <summary>
@@ -24,57 +24,93 @@ namespace SeniorProject
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// createtitle control.
+        /// EmailPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label createtitle;
+        protected global::System.Web.UI.WebControls.Panel EmailPanel;
 
         /// <summary>
-        /// FnameTB control.
+        /// EmailTB control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox FnameTB;
+        protected global::System.Web.UI.WebControls.TextBox EmailTB;
 
         /// <summary>
-        /// LnameTB control.
+        /// EmailValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LnameTB;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailValidator;
 
         /// <summary>
-        /// txtUsername control.
+        /// SendCodeBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUsername;
+        protected global::System.Web.UI.WebControls.Button SendCodeBtn;
 
         /// <summary>
-        /// txtPassword control.
+        /// EmailMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPassword;
+        protected global::System.Web.UI.WebControls.Label EmailMessage;
 
         /// <summary>
-        /// registerbutton control.
+        /// CodePanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button registerbutton;
+        protected global::System.Web.UI.WebControls.Panel CodePanel;
+
+        /// <summary>
+        /// CodeTB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox CodeTB;
+
+        /// <summary>
+        /// VeriCodeBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button VeriCodeBtn;
+
+        /// <summary>
+        /// CodeMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label CodeMessage;
+
+        /// <summary>
+        /// ResendBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ResendBtn;
     }
 }

@@ -71,7 +71,7 @@
     <Content Include="AdminProfile.aspx" />
     <Content Include="Channels.aspx" />
     <Content Include="Chats.aspx" />
-    <Content Include="EmailVerification.aspx" />
+    <Content Include="EmailVeri2.aspx" />
     <Content Include="ForgotResetPassword.aspx" />
     <Content Include="HomePage.aspx" />
     <Content Include="LogInPage.aspx" />
@@ -125,12 +125,12 @@
     <Compile Include="Chats.aspx.designer.cs">
       <DependentUpon>Chats.aspx</DependentUpon>
     </Compile>
-    <Compile Include="EmailVerification.aspx.cs">
-      <DependentUpon>EmailVerification.aspx</DependentUpon>
+    <Compile Include="EmailVeri2.aspx.cs">
+      <DependentUpon>EmailVeri2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="EmailVerification.aspx.designer.cs">
-      <DependentUpon>EmailVerification.aspx</DependentUpon>
+    <Compile Include="EmailVeri2.aspx.designer.cs">
+      <DependentUpon>EmailVeri2.aspx</DependentUpon>
     </Compile>
     <Compile Include="ForgotResetPassword.aspx.cs">
       <DependentUpon>ForgotResetPassword.aspx</DependentUpon>

@@ -11,6 +11,11 @@ namespace SeniorProject
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.UnobtrusiveValidationMode = System.Web.UI.UnobtrusiveValidationMode.None;
+        }
+
+        protected void registerbutton_Click(object sender, EventArgs e)
+        {
 
         }
     }
