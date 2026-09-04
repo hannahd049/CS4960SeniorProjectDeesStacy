@@ -5,10 +5,19 @@ body {
     font-family: 'Segoe UI', sans-serif;
 }
 
+/*title container*/
+.title-container {
+    display: block;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #5A3E46;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
 
-/* =========================
-   WELCOME PAGE
-   ========================= */
+/*WELCOME PAGE */
 
 .welcome-container {
     min-height: 100vh;
@@ -28,17 +37,15 @@ body {
 }
 
 
-/* =========================
-   BUTTONS
-   ========================= */
+/* BUTTONS */
 
 .btn {
     display: block;
     width: 150px;
     margin: 12px auto;
     padding: 14px 20px;
-    background-color: #F4C6D7 !important;
-    color: #5A3E46 !important;
+    background-color: #F4C6D7;
+    color: #5A3E46;
     font-size: 18px;
     font-weight: 600;
     border: none;
@@ -49,15 +56,13 @@ body {
 }
 
     .btn:hover {
-        background-color: #E8A9C0 !important;
+        background-color: #E8A9C0;
         transform: translateY(-3px);
         box-shadow: 0 6px 14px rgba(0,0,0,0.18);
     }
 
 
-/* =========================
-   HOME PAGE TOP MENU
-   ========================= */
+/*HOME PAGE TOP MENU*/
 
 .top-menu {
     position: fixed;
