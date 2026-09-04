@@ -79,7 +79,6 @@
     <Content Include="ReportUser.aspx" />
     <Content Include="OtherUsersProfiles.aspx" />
     <Content Include="SearchFunction.aspx" />
-    <Content Include="SignUpPage.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
