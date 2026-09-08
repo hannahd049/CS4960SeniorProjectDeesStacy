@@ -22,7 +22,6 @@
 <body>
 
     <form id="form1" runat="server">
-        <a href="LogInPage.aspx">LogInPage.aspx</a>
 
         <div style="
             margin: 80px auto;

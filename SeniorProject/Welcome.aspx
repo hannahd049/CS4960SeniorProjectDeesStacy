@@ -9,7 +9,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-            <asp:Label ID="webtitle" runat="server" Text="Girltalk Meets Stem" CssClass="title-container"></asp:Label><br />
+            <asp:Label ID="webtitle" runat="server" Text="Girl-Talk Meets Stem" CssClass="title-container"></asp:Label><br />
                 <div class="welcome-container">
                     <div class="bubble-section">
 
