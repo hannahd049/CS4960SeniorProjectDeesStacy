@@ -4,12 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link rel="stylesheet" href="StyleSheet.css?v=4" />
+    <link rel="stylesheet" href="StyleSheet.css?v=5" />
     <title>Login or Sign Up</title>
 </head>
 <body>
     <form id="form1" runat="server">
-            <asp:Label ID="gametitle" runat="server" Text="WEB TITLE WHEN WE HAVE ONE" CssClass="title-container"></asp:Label><br />
+            <asp:Label ID="webtitle" runat="server" Text="Girltalk Meets Stem" CssClass="title-container"></asp:Label><br />
                 <div class="welcome-container">
                     <div class="bubble-section">
 

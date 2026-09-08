@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link rel="stylesheet" href="StyleSheet.css?v=4" />
+    <link rel="stylesheet" href="StyleSheet.css?v=5" />
     <title>Create Your Account</title>
 </head>
 
@@ -11,9 +11,7 @@
     <form id="form1" runat="server">
         <div>
 
-            <asp:Label ID="createtitle" runat="server" 
-                       Text="Create Your Account" 
-                       CssClass="title-container"></asp:Label>
+            <asp:Label ID="createtitle" runat="server" Text="Create Your Account"  CssClass="title-container"></asp:Label>
 
             <div class="bubble-section">
 

@@ -4,12 +4,14 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-     <link rel="stylesheet" href="StyleSheet.css?v=4" />
+     <link rel="stylesheet" href="StyleSheet.css?v=5" />
     <title>Verify Your Email</title>
 </head>
 <body>
     <form id="form1" runat="server">
+
         <div class="bubble-section">
+            <asp:Label ID="verititle" runat="server" Text="Verify Your Student Email" CssClass="title-container"></asp:Label><br />
             <asp:Panel ID="EmailPanel" runat="server">
 
                 <label for="EmailTB">Enter Your Email:</label>
@@ -28,7 +30,7 @@
                 </asp:Panel>
 
 
-                <!-- STEP 2: Enter Code -->
+                <!--Enter Code -->
                 <asp:Panel ID="CodePanel" runat="server" Visible="false">
 
                     <label for="CodeTB">Enter the Code Sent to Your Email:</label>

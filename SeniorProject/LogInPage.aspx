@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
-    <link rel="stylesheet" href="StyleSheet.css" />
+    <link rel="stylesheet" href="StyleSheet.css?v=5" />
     <title>Login to Your Account</title>
 
     <script>
@@ -22,6 +22,7 @@
 <body>
 
     <form id="form1" runat="server">
+        <a href="LogInPage.aspx">LogInPage.aspx</a>
 
         <div style="
             margin: 80px auto;

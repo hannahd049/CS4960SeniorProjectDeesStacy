@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ForgotResetPassword.aspx.cs" Inherits="SeniorProject.ForgotResetPassword" %>
+﻿﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ForgotResetPassword.aspx.cs" Inherits="SeniorProject.ForgotResetPassword" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">

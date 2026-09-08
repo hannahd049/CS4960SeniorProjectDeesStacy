@@ -54,7 +54,6 @@ namespace SeniorProject
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
             smtp.EnableSsl = true;
 
-            // USE YOUR APP PASSWORD HERE
             smtp.Credentials = new NetworkCredential("verifystudent99@gmail.com", "bwjq wdhp ibtd sdqk");
 
             smtp.Send(msg);
@@ -88,7 +87,7 @@ namespace SeniorProject
             CodeMessage.ForeColor = System.Drawing.Color.Green;
             CodeMessage.Text = "A new code has been sent.";
 
-            // Disable resend again
+           
             ResendBtn.Enabled = false;
             ScriptManager.RegisterStartupScript(this, GetType(), "EnableResendAgain",
                 "setTimeout(function(){ document.getElementById('" + ResendBtn.ClientID + "').disabled = false; }, 15000);",

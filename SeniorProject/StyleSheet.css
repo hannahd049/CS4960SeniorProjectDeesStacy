@@ -27,7 +27,7 @@ body {
 }
 
 
-/* WHITE LOGIN/SIGNUP BOX */
+/* WHITE BUBBLE BOX */
 .bubble-section {
     background-color: white;
     border-radius: 20px;
@@ -41,7 +41,7 @@ body {
 
 .btn {
     display: block;
-    width: 150px;
+    width: 500px;
     margin: 12px auto;
     padding: 14px 20px;
     background-color: #F4C6D7;
@@ -110,4 +110,10 @@ body {
     height: 2px;
     background-color: #b88a8a;
     z-index: 999;
+}
+/*MESSAGES */
+.message {
+    display: block;
+    margin-top: 15px;
+    color: #FA4616;
 }
