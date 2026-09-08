@@ -42,7 +42,7 @@ namespace SeniorProject
 
                 message.From.Add(
                     new MailboxAddress(
-                        "GirlTalk Meets STEM",
+                        "Reset your password",
                         senderEmail
                     )
                 );
@@ -55,7 +55,7 @@ namespace SeniorProject
                 );
 
                 message.Subject =
-                    "GirlTalk Meets STEM - Reset Your Password";
+                    "Reset Your Password";
 
                 var builder = new BodyBuilder();
 
@@ -76,35 +76,28 @@ namespace SeniorProject
     padding:35px;
     border-radius:18px;
     box-shadow:0 4px 15px rgba(0,0,0,0.10);
+    border:2px solid #f3c6d3;
 '>
 
     <h1 style='
         text-align:center;
-        color:#FA4616;
-    '>
-        GirlTalk Meets STEM
-    </h1>
-
-    <h2 style='
-        text-align:center;
-        color:#333333;
+        color: #b565a7;
     '>
         Reset Your Password
-    </h2>
+    </h1>
 
     <p style='
         color:#555555;
         font-size:16px;
-        line-height:1.6;
+        text-align:center;
     '>
-        We received a request to reset your
-        GirlTalk Meets STEM password.
+        We received a request to reset your Senior Project password.
     </p>
 
     <p style='
         color:#555555;
         font-size:16px;
-        line-height:1.6;
+        text-align:center;
     '>
         Click the button below to reset your password.
     </p>
@@ -116,7 +109,7 @@ namespace SeniorProject
 
         <a href='{resetLink}'
            style='
-                background-color:#FA4616;
+                background-color:#d46a92;
                 color:white;
                 padding:14px 28px;
                 text-decoration:none;
@@ -132,10 +125,10 @@ namespace SeniorProject
 
     <p style='
         color:#777777;
+        text-align:center;
         font-size:13px;
     '>
-        If you did not request a password reset,
-        you can safely ignore this email.
+        If you did not request a password reset, you can safely ignore this email.
     </p>
 
     <hr style='
@@ -149,13 +142,14 @@ namespace SeniorProject
         color:#999999;
         font-size:12px;
     '>
-        GirlTalk Meets STEM
+        Senior Project
     </p>
 
 </div>
 
 </body>
 </html>";
+
 
                 message.Body = builder.ToMessageBody();
 

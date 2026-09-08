@@ -8,6 +8,11 @@ namespace SeniorProject
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (IsPostBack)
+            {
+                txtNewPassword.Attributes["value"] = txtNewPassword.Text;
+                txtConfirmPassword.Attributes["value"] = txtConfirmPassword.Text;
+            }
         }
 
         protected void btnReset_Click(object sender, EventArgs e)
@@ -15,6 +20,27 @@ namespace SeniorProject
             string email = txtEmail.Text.Trim();
             string newPassword = txtNewPassword.Text.Trim();
             string confirmPassword = txtConfirmPassword.Text.Trim();
+
+            if (string.IsNullOrEmpty(email))
+            {
+                lblMessage.ForeColor = Color.Red;
+                lblMessage.Text = "Please enter your email.";
+                return;
+            }
+
+            if (string.IsNullOrEmpty(newPassword))
+            {
+                lblMessage.ForeColor = Color.Red;
+                lblMessage.Text = "Please enter a new password.";
+                return;
+            }
+
+            if (string.IsNullOrEmpty(confirmPassword))
+            {
+                lblMessage.ForeColor = Color.Red;
+                lblMessage.Text = "Please confirm your password.";
+                return;
+            }
 
             if (newPassword != confirmPassword)
             {
@@ -45,8 +71,7 @@ namespace SeniorProject
 
                         if (rowsAffected > 0)
                         {
-                            lblMessage.ForeColor = Color.Green;
-                            lblMessage.Text = "Password updated successfully!";
+                            Response.Redirect("~/LogInPage.aspx", false);
                         }
                         else
                         {
