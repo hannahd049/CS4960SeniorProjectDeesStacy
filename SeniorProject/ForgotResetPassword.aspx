@@ -3,31 +3,26 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link rel="stylesheet" href="StyleSheet.css" />
+    <link rel="stylesheet" href="StyleSheet.css?v=5" />
     <title>Reset Password</title>
 </head>
 <body>
     <form id="form1" runat="server">
 
-        <div style="margin: 50px auto; width: 300px; font-family: Arial, sans-serif;">
-            <h2>Reset Password</h2>
+        <div class="bubble-section">
+            <asp:Label ID="resettitle" runat="server" Text="Reset Password" CssClass="title-container"></asp:Label><br />
 
             <label>Email:</label><br />
-            <asp:TextBox ID="txtEmail" runat="server" Width="100%" /><br /><br />
+            <asp:TextBox ID="txtEmail" runat="server" /><br /><br />
 
             <label>New Password:</label><br />
-            <asp:TextBox ID="txtNewPassword" runat="server" TextMode="Password" Width="100%" /><br /><br />
+            <asp:TextBox ID="txtNewPassword" runat="server" TextMode="Password" /><br /><br />
 
             <label>Confirm Password:</label><br />
-            <asp:TextBox ID="txtConfirmPassword" runat="server" TextMode="Password" Width="100%" /><br /><br />
+            <asp:TextBox ID="txtConfirmPassword" runat="server" TextMode="Password" /><br /><br />
 
             <asp:Button 
-                ID="btnReset" 
-                runat="server" 
-                Text="Reset Password" 
-                OnClick="btnReset_Click" 
-                Width="100%" />
-
+                ID="btnReset" runat="server" Text="Reset Password" CssClass="btn" OnClick="btnReset_Click" />
             <br /><br />
 
             <asp:Label ID="lblMessage" runat="server" ForeColor="Red" />

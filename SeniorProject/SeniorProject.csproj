@@ -107,12 +107,8 @@
     <Content Include="AdminProfile.aspx" />
     <Content Include="Channels.aspx" />
     <Content Include="Chats.aspx" />
-<<<<<<< HEAD
     <Content Include="EmailVeri2.aspx" />
-=======
-    <Content Include="EmailVerification.aspx" />
     <Content Include="FORGOTPassword.aspx" />
->>>>>>> f6b3c4faa131e1120247aef9ea0a10d267a3bf1d
     <Content Include="ForgotResetPassword.aspx" />
     <Content Include="HomePage.aspx" />
     <Content Include="LogInPage.aspx" />

@@ -20,7 +20,7 @@ namespace SeniorProject
 
         protected void signupbutton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("AccountRegistration.aspx");
+            Response.Redirect("EmailVeri2.aspx");
         }
     }
 }
