@@ -27,9 +27,7 @@
 
         <label for="txtEmail" style="display:block; margin-top: 10px;">Email Address:</label>
 
-        <asp:TextBox
-            ID="txtEmail" runat="server" Width="100%" onkeyup="clearError()" CssClass="tb">
-        </asp:TextBox>
+        <asp:TextBox ID="txtEmail" runat="server" onkeyup="clearError()" CssClass="tb"> </asp:TextBox>
 
         <asp:Label ID="lblMessage" runat="server" ForeColor="Red" style="display:block; margin-top: 10px;">
         </asp:Label>

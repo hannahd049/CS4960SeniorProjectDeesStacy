@@ -39,12 +39,8 @@
             </h2>
 
             <label for="txtEmail" style="display:block; margin-top: 15px;">Email:</label>
-            <asp:TextBox
-                ID="txtEmail"
-                runat="server"
-                Width="100%"
-                onkeyup="clearUserError()"
-                style="margin-top: 5px; padding: 8px; border-radius: 8px; border: 1px solid #ccc;">
+
+            <asp:TextBox ID="txtEmail" runat="server" onkeyup="clearUserError()" Width="100%" CssClass="tb">
             </asp:TextBox>
 
             <asp:Label 
