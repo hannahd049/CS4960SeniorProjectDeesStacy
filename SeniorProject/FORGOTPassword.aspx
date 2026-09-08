@@ -1,5 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true"
-    Async="true"
+﻿<%@ Page Language="C#" AutoEventWireup="true" Async="true"
     CodeBehind="ForgotPassword.aspx.cs"
     Inherits="SeniorProject.ForgotPassword" %>
 
@@ -8,108 +7,86 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
+    <link rel="stylesheet" href="StyleSheet.css" />
+    <title>Forgot Password</title>
 
-    <title>Forgot Password - GirlTalk Meets STEM</title>
-
-    <style>
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            text-align: center;
-            padding-top: 100px;
+    <script>
+        function clearError() {
+            document.getElementById('<%= lblMessage.ClientID %>').innerText = "";
         }
-
-        .box {
-            width: 400px;
-            margin: auto;
-            background-color: white;
-            padding: 35px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        h1 {
-            color: #FA4616;
-            margin-bottom: 10px;
-        }
-
-        p {
-            color: #555;
-        }
-
-        .input {
-            width: 90%;
-            padding: 12px;
-            margin: 15px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 15px;
-        }
-
-        .button {
-            background-color: #FA4616;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        .button:hover {
-            background-color: #d93c0c;
-        }
-
-        .message {
-            display: block;
-            margin-top: 15px;
-            color: #FA4616;
-        }
-
-    </style>
-
+    </script>
 </head>
 
 <body>
 
 <form id="form1" runat="server">
 
-    <div class="box">
+    <div style="
+        margin: 80px auto;
+        width: 400px;
+        padding: 35px;
+        font-family: Arial, sans-serif;
+        background-color: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        border: 2px solid #f3c6d3;
+    ">
 
-        <h1>Forgot Password?</h1>
+        <h2 style="text-align: center; color: #d46a92;">
+            Forgot Password?
+        </h2>
 
-        <p>
-            Enter your email address and we'll send you
-            a link to reset your password.
+        <p style="color: #555; text-align:center; margin-bottom: 20px;">
+            Enter your email address and we'll send you a link to reset your password.
         </p>
+
+        <label for="txtEmail" style="display:block; margin-top: 10px;">Email Address:</label>
 
         <asp:TextBox
             ID="txtEmail"
             runat="server"
-            CssClass="input"
-            placeholder="Email Address">
+            Width="100%"
+            onkeyup="clearError()"
+            style="margin-top: 5px; padding: 12px; border-radius: 8px; border: 1px solid #ccc;">
         </asp:TextBox>
-
-        <br />
-
-        <asp:Button
-            ID="btnSendEmail"
-            runat="server"
-            Text="Send Reset Email"
-            CssClass="button"
-            OnClick="btnSendEmail_Click" />
 
         <asp:Label
             ID="lblMessage"
             runat="server"
-            CssClass="message">
+            ForeColor="Red"
+            style="display:block; margin-top: 10px;">
         </asp:Label>
+
+        <asp:Button
+            ID="btnSendEmail"
+            runat="server"
+            Text="Send Reset Link"
+            OnClick="btnSendEmail_Click"
+            style="
+                margin-top: 20px;
+                padding: 12px;
+                width: 100%;
+                border: none;
+                border-radius: 8px;
+                background-color: #d46a92;
+                color: white;
+                font-size: 16px;
+                cursor: pointer;
+            " />
+
+        <div style="margin-top: 10px; text-align:center;">
+            <asp:HyperLink
+                ID="lnkBackToLogin"
+                runat="server"
+                NavigateUrl="~/LogInPage.aspx"
+                Text="Back to Login"
+                style="color: #b565a7; font-size: 14px; text-decoration:none;">
+            </asp:HyperLink>
+        </div>
 
     </div>
 
 </form>
 
 </body>
-
 </html>
