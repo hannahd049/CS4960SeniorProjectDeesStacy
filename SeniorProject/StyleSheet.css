@@ -123,14 +123,17 @@ body {
     text-align: center; 
     color: #d46a92
 }
+/*paragraph*/
 .p {
     color: #555;
     text-align: center;
     margin-bottom: 20px;
 }
+/*textboxes*/
 .tb {
     margin-top: 5px;
     padding: 12px;
     border-radius: 8px;
     border: 1px solid #ccc;
+    width:500px;
 }
