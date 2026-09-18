@@ -112,7 +112,6 @@
     <Content Include="ForgotResetPassword.aspx" />
     <Content Include="HomePage.aspx" />
     <Content Include="LogInPage.aspx" />
-    <Content Include="AccountProfiles.aspx" />
     <Content Include="ReportUser.aspx" />
     <Content Include="OtherUsersProfiles.aspx" />
     <Content Include="SearchFunction.aspx" />
@@ -197,13 +196,6 @@
     </Compile>
     <Compile Include="LogInPage.aspx.designer.cs">
       <DependentUpon>LogInPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AccountProfiles.aspx.cs">
-      <DependentUpon>AccountProfiles.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AccountProfiles.aspx.designer.cs">
-      <DependentUpon>AccountProfiles.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportUser.aspx.cs">

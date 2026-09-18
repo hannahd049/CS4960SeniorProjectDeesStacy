@@ -66,8 +66,11 @@ namespace SeniorProject
                             return;
                         }
 
+                        Session["UserEmail"] = email;
+
                         lblMessage.ForeColor = System.Drawing.Color.Green;
                         lblMessage.Text = "Login successful!";
+
                         Response.Redirect("HomePage.aspx");
                     }
                 }

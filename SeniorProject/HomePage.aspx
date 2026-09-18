@@ -15,7 +15,7 @@
                
                 <div class="top-menu">
                     <a href="Channels.aspx" class="nav-link">Channels</a>
-                    <a href="UserProfile.aspx" class="nav-link">Profile</a>
+                    <a href="AccountSettings.aspx" class="nav-link">Profile</a>
                 </div>
             <div class="top-line"></div>
             
