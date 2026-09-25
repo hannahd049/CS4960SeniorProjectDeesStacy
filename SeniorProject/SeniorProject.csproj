@@ -111,6 +111,7 @@
     <Content Include="FORGOTPassword.aspx" />
     <Content Include="ForgotResetPassword.aspx" />
     <Content Include="HomePage.aspx" />
+    <Content Include="Images\default_profile_image.jpg" />
     <Content Include="LogInPage.aspx" />
     <Content Include="ReportUser.aspx" />
     <Content Include="OtherUsersProfiles.aspx" />

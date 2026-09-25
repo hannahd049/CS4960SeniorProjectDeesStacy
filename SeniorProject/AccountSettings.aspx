@@ -112,20 +112,9 @@
 
             <br />
 
-            <asp:Button
-                ID="btnUploadPic"
-                runat="server"
-                Text="Upload a picture"
-                style="
-                    margin-top: 10px;
-                    padding: 10px;
-                    border: none;
-                    border-radius: 8px;
-                    background-color: #d46a92;
-                    color: white;
-                    font-size: 14px;
-                    cursor: pointer;
-                " />
+            <asp:FileUpload
+            ID="fileProfilePic"
+            runat="server" />
 
         </div>
 

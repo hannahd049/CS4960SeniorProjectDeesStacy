@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.IO;
 using System.Web.UI;
 
 namespace SeniorProject
@@ -36,7 +37,7 @@ namespace SeniorProject
                     connection.Open();
 
                     string query = @"
-                        SELECT Name, Email, Password
+                        SELECT Name, Email, Password, ProfilePicture
                         FROM Users
                         WHERE Email = @Email";
 
@@ -51,6 +52,17 @@ namespace SeniorProject
                                 txtName.Text = reader["Name"].ToString();
                                 txtEmail.Text = reader["Email"].ToString();
                                 txtPassword.Text = reader["Password"].ToString();
+
+                                string profilePicture = reader["ProfilePicture"].ToString();
+
+                                if (!string.IsNullOrEmpty(profilePicture))
+                                {
+                                    imgProfile.ImageUrl = "~/Images/" + profilePicture;
+                                }
+                                else
+                                {
+                                    imgProfile.ImageUrl = "~/Images/default-avatar.png";
+                                }
                             }
                         }
                     }
@@ -79,23 +91,51 @@ namespace SeniorProject
 
             if (string.IsNullOrEmpty(newName))
             {
-                lblMessage.ForeColor = System.Drawing.Color.Red;
-                lblMessage.Text = "Please enter your name.";
+                lblNameError.Text = "Please enter your name.";
                 return;
             }
 
             if (string.IsNullOrEmpty(newEmail))
             {
-                lblMessage.ForeColor = System.Drawing.Color.Red;
-                lblMessage.Text = "Please enter your email.";
+                lblEmailError.Text = "Please enter your email.";
                 return;
             }
 
             if (string.IsNullOrEmpty(newPassword))
             {
-                lblMessage.ForeColor = System.Drawing.Color.Red;
-                lblMessage.Text = "Please enter your password.";
+                lblPassError.Text = "Please enter your password.";
                 return;
+            }
+
+            string profilePicture = "";
+
+            // Check if the user selected a picture
+            if (fileProfilePic.HasFile)
+            {
+                string extension = Path.GetExtension(fileProfilePic.FileName).ToLower();
+
+                if (extension != ".jpg" &&
+                    extension != ".jpeg" &&
+                    extension != ".png" &&
+                    extension != ".gif")
+                {
+                    lblMessage.ForeColor = System.Drawing.Color.Red;
+                    lblMessage.Text = "Please upload a JPG, JPEG, PNG, or GIF image.";
+                    return;
+                }
+
+                profilePicture = Guid.NewGuid().ToString() + extension;
+
+                string folderPath = Server.MapPath("~/Images/");
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string filePath = Path.Combine(folderPath, profilePicture);
+
+                fileProfilePic.SaveAs(filePath);
             }
 
             string connectionString =
@@ -109,12 +149,27 @@ namespace SeniorProject
                 {
                     connection.Open();
 
-                    string query = @"
-                        UPDATE Users
-                        SET Name = @Name,
-                            Email = @NewEmail,
-                            Password = @Password
-                        WHERE Email = @OldEmail";
+                    string query;
+
+                    if (!string.IsNullOrEmpty(profilePicture))
+                    {
+                        query = @"
+                            UPDATE Users
+                            SET Name = @Name,
+                                Email = @NewEmail,
+                                Password = @Password,
+                                ProfilePicture = @ProfilePicture
+                            WHERE Email = @OldEmail";
+                    }
+                    else
+                    {
+                        query = @"
+                            UPDATE Users
+                            SET Name = @Name,
+                                Email = @NewEmail,
+                                Password = @Password
+                            WHERE Email = @OldEmail";
+                    }
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -122,6 +177,11 @@ namespace SeniorProject
                         command.Parameters.AddWithValue("@NewEmail", newEmail);
                         command.Parameters.AddWithValue("@Password", newPassword);
                         command.Parameters.AddWithValue("@OldEmail", oldEmail);
+
+                        if (!string.IsNullOrEmpty(profilePicture))
+                        {
+                            command.Parameters.AddWithValue("@ProfilePicture", profilePicture);
+                        }
 
                         int rowsUpdated = command.ExecuteNonQuery();
 
@@ -131,6 +191,11 @@ namespace SeniorProject
 
                             lblMessage.ForeColor = System.Drawing.Color.Green;
                             lblMessage.Text = "Profile updated successfully!";
+
+                            if (!string.IsNullOrEmpty(profilePicture))
+                            {
+                                imgProfile.ImageUrl = "~/Images/" + profilePicture;
+                            }
                         }
                         else
                         {
