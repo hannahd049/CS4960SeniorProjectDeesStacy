@@ -62,8 +62,8 @@ namespace SeniorProject
 
                             if (!reader.HasRows)
                             {
-                                lblMessage.ForeColor = Color.Red;
-                                lblMessage.Text = "Invalid email or password.";
+                                lblPassError.ForeColor = Color.Red;
+                                lblPassError.Text = "Invalid email or password.";
                                 return;
                             }
 
@@ -74,8 +74,8 @@ namespace SeniorProject
 
                             if (storedPassword != password)
                             {
-                                lblMessage.ForeColor = Color.Red;
-                                lblMessage.Text = "Invalid email or password.";
+                                lblPassError.ForeColor = Color.Red;
+                                lblPassError.Text = "Invalid email or password.";
                                 return;
                             }
 
@@ -83,7 +83,6 @@ namespace SeniorProject
                             Session["UserRole"] = userRole;
                         }
                     }
-                    
                     Response.Redirect("HomePage.aspx", false);
                     Context.ApplicationInstance.CompleteRequest();
                 }
