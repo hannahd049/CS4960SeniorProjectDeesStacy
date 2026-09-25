@@ -23,7 +23,7 @@
 
     <form id="form1" runat="server">
 
-       <div style="
+        <div style="
             margin: 80px auto;
             width: 350px;
             padding: 35px;
@@ -38,9 +38,16 @@
                 Welcome Back
             </h2>
 
-            <label for="txtEmail" style="display:block; margin-top: 15px;">Email:</label>
+            <label for="txtEmail" style="display:block; margin-top: 15px;">
+                Email:
+            </label>
 
-            <asp:TextBox ID="txtEmail" runat="server" onkeyup="clearUserError()" Width="100%" CssClass="tb">
+            <asp:TextBox 
+                ID="txtEmail" 
+                runat="server" 
+                onkeyup="clearUserError()" 
+                Width="100%" 
+                CssClass="tb">
             </asp:TextBox>
 
             <asp:Label 
@@ -49,7 +56,10 @@
                 ForeColor="Red"
                 style="font-size: 13px; display:block; margin-top: 4px; margin-bottom: 8px;" />
 
-            <label for="txtPassword" style="display:block; margin-top: 5px;">Password:</label>
+            <label for="txtPassword" style="display:block; margin-top: 5px;">
+                Password:
+            </label>
+
             <asp:TextBox
                 ID="txtPassword"
                 runat="server"

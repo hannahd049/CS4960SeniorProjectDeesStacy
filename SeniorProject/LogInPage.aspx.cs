@@ -1,5 +1,7 @@
 using System;
+using System.Configuration;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Web.UI;
 
 namespace SeniorProject
@@ -17,24 +19,28 @@ namespace SeniorProject
             lblMessage.Text = "";
 
             string email = txtEmail.Text.Trim();
-            string password = txtPassword.Text.Trim();
+            string password = txtPassword.Text;
 
-            bool missingUsername = string.IsNullOrEmpty(email);
+            bool missingEmail = string.IsNullOrEmpty(email);
             bool missingPassword = string.IsNullOrEmpty(password);
 
-            if (missingUsername)
+            if (missingEmail)
+            {
                 lblUserError.Text = "Please enter your email.";
+            }
 
             if (missingPassword)
+            {
                 lblPassError.Text = "Please enter your password.";
+            }
 
-            if (missingUsername || missingPassword)
+            if (missingEmail || missingPassword)
+            {
                 return;
+            }
 
             string connectionString =
-                System.Configuration.ConfigurationManager
-                .ConnectionStrings["SeniorProjectConnection"]
-                .ConnectionString;
+                ConfigurationManager.ConnectionStrings["SeniorProjectConnection"].ConnectionString;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -42,40 +48,48 @@ namespace SeniorProject
                 {
                     connection.Open();
 
-                    string query = "SELECT Password, Role FROM Users WHERE Email = @Email";
+                    string query = @"
+                        SELECT Password, Role
+                        FROM Users
+                        WHERE Email = @Email";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Email", email);
 
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        if (!reader.HasRows)
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            lblUserError.Text = "Incorrect email.";
-                            return;
+
+                            if (!reader.HasRows)
+                            {
+                                lblMessage.ForeColor = Color.Red;
+                                lblMessage.Text = "Invalid email or password.";
+                                return;
+                            }
+
+                            reader.Read();
+
+                            string storedPassword = reader["Password"].ToString();
+                            string userRole = reader["Role"].ToString();
+
+                            if (storedPassword != password)
+                            {
+                                lblMessage.ForeColor = Color.Red;
+                                lblMessage.Text = "Invalid email or password.";
+                                return;
+                            }
+
+                            Session["UserEmail"] = email;
+                            Session["UserRole"] = userRole;
                         }
-
-                        reader.Read();
-
-                        string storedPassword = reader["Password"].ToString();
-
-                        if (storedPassword != password)
-                        {
-                            lblPassError.Text = "Incorrect password.";
-                            return;
-                        }
-
-                        Session["UserEmail"] = email;
-
-                        lblMessage.ForeColor = System.Drawing.Color.Green;
-                        lblMessage.Text = "Login successful!";
-
-                        Response.Redirect("HomePage.aspx");
                     }
+                    
+                    Response.Redirect("HomePage.aspx", false);
+                    Context.ApplicationInstance.CompleteRequest();
                 }
                 catch (Exception ex)
                 {
+                    lblMessage.ForeColor = Color.Red;
                     lblMessage.Text = "Database error: " + ex.Message;
                 }
             }
