@@ -319,7 +319,7 @@
         <div
             id="passwordSection"
             style="
-                display:none;
+                display:<%= ShowPasswordSection ? "block" : "none" %>;
                 padding:15px;
                 margin-top:15px;
                 background-color:#fff5f8;
@@ -342,6 +342,7 @@
                 runat="server"
                 TextMode="Password"
                 Width="100%"
+                onkeyup="clearPasswordErrors()"
                 style="
                     box-sizing:border-box;
                     padding:10px;
@@ -367,6 +368,7 @@
                 runat="server"
                 TextMode="Password"
                 Width="100%"
+                onkeyup="clearPasswordErrors()"
                 style="
                     box-sizing:border-box;
                     padding:10px;
@@ -392,6 +394,7 @@
                 runat="server"
                 TextMode="Password"
                 Width="100%"
+                onkeyup="clearPasswordErrors()"
                 style="
                     box-sizing:border-box;
                     padding:10px;
@@ -401,28 +404,7 @@
             >
             </asp:TextBox>
 
-
-            <asp:Button
-                ID="btnChangePassword"
-                runat="server"
-                Text="Update Password"
-                OnClick="btnChangePassword_Click"
-                style="
-                    width:100%;
-                    margin-top:12px;
-                    padding:10px;
-                    border:none;
-                    border-radius:8px;
-                    background-color:#d46a92;
-                    color:white;
-                    font-size:14px;
-                    cursor:pointer;
-                "
-            />
-
-        </div>
-
-
+            
         <asp:Label
             ID="lblPassError"
             runat="server"
@@ -433,6 +415,9 @@
                 margin-top:8px;
             "
         />
+
+        </div>
+
 
         <!-- DELETE ACCOUNT -->
 
