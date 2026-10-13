@@ -9,7 +9,7 @@
     <title>Login to Your Account</title>
 
     <script>
-        function clearUserError() {
+function clearUserError() {
             document.getElementById('<%= lblUserError.ClientID %>').innerText = "";
         }
 

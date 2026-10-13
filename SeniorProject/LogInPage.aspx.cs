@@ -49,7 +49,7 @@ namespace SeniorProject
                     connection.Open();
 
                     string query = @"
-                        SELECT Password, Role
+                        SELECT Name, Password, Role
                         FROM Users
                         WHERE Email = @Email";
 
@@ -71,6 +71,7 @@ namespace SeniorProject
 
                             string storedPassword = reader["Password"].ToString();
                             string userRole = reader["Role"].ToString();
+                            string displayName = reader["Name"].ToString();
 
                             if (storedPassword != password)
                             {
@@ -81,6 +82,7 @@ namespace SeniorProject
 
                             Session["UserEmail"] = email;
                             Session["UserRole"] = userRole;
+                            Session["DisplayName"] = displayName;   
                         }
                     }
                     Response.Redirect("HomePage.aspx", false);

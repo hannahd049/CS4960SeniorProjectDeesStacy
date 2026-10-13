@@ -11,8 +11,23 @@ namespace SeniorProject
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                if (Session["DisplayName"] != null)
+                {
+                    string displayName = Session["DisplayName"].ToString();
+                    string email = Session["UserEmail"].ToString(); // used to identify profile
 
+                    UserGreeting.Text = "Hi, " + displayName;
+                    UserGreeting.NavigateUrl = "ViewProfile.aspx?email=" + email;
+                }
+                else
+                {
+                    Response.Redirect("LogInPage.aspx");
+                }
+            }
         }
+
 
     }
 }    
