@@ -604,14 +604,6 @@
                         A place to connect, share ideas, talk about what
                         matters, and grow together. There's a seat for you here.
                     </p>
-
-                    <a href="Channels.aspx" class="primary-button">
-                        Explore Channels <span class="button-arrow">→</span>
-                    </a>
-
-                    <div class="welcome-note">
-                        <span>♡</span> Come as you are. Find your people.
-                    </div>
                 </div>
 
                 <div class="welcome-art">
