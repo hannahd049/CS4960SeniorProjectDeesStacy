@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
 using System.Web.UI;
@@ -7,8 +8,6 @@ namespace SeniorProject
 {
     public partial class AccountSettings : Page
     {
-        // Controls whether the password section stays open
-        // after the page reloads because of an error.
         public bool ShowPasswordSection { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -19,7 +18,6 @@ namespace SeniorProject
             }
         }
 
-
         private void LoadUserProfile()
         {
             if (Session["UserEmail"] == null)
@@ -28,11 +26,10 @@ namespace SeniorProject
                 return;
             }
 
-            string email =
-                Session["UserEmail"].ToString();
+            string email = Session["UserEmail"].ToString();
 
             string connectionString =
-                System.Configuration.ConfigurationManager
+                ConfigurationManager
                 .ConnectionStrings["SeniorProjectConnection"]
                 .ConnectionString;
 
@@ -44,24 +41,29 @@ namespace SeniorProject
                     connection.Open();
 
                     string query = @"
-                        SELECT Name, Email, ProfilePicture
+                        SELECT FirstName, LastName, Username,
+                               Email, ProfilePicture
                         FROM Users
                         WHERE Email = @Email";
 
                     using (SqlCommand command =
                         new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue(
-                            "@Email",
-                            email);
+                        command.Parameters.AddWithValue("@Email", email);
 
                         using (SqlDataReader reader =
                             command.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                txtName.Text =
-                                    reader["Name"].ToString();
+                                txtFirstName.Text =
+                                    reader["FirstName"].ToString();
+
+                                txtLastName.Text =
+                                    reader["LastName"].ToString();
+
+                                txtUsername.Text =
+                                    reader["Username"].ToString();
 
                                 lblEmail.Text =
                                     reader["Email"].ToString();
@@ -94,7 +96,6 @@ namespace SeniorProject
             }
         }
 
-
         // SAVE CHANGES
         protected void btnSave_Click(object sender, EventArgs e)
         {
@@ -104,54 +105,51 @@ namespace SeniorProject
                 return;
             }
 
-            string email =
-                Session["UserEmail"].ToString();
+            string email = Session["UserEmail"].ToString();
 
-            string newName =
-                txtName.Text.Trim();
+            string firstName = txtFirstName.Text.Trim();
+            string lastName = txtLastName.Text.Trim();
+            string username = txtUsername.Text.Trim();
 
-            string currentPassword =
-                txtCurrentPassword.Text;
+            string currentPassword = txtCurrentPassword.Text;
+            string newPassword = txtNewPassword.Text;
+            string confirmPassword = txtConfirmPassword.Text;
 
-            string newPassword =
-                txtNewPassword.Text;
-
-            string confirmPassword =
-                txtConfirmPassword.Text;
-
-            // Clear old messages
             lblNameError.Text = "";
             lblPassError.Text = "";
             lblMessage.Text = "";
 
-            // Check name
-            if (string.IsNullOrEmpty(newName))
+            if (string.IsNullOrWhiteSpace(firstName))
             {
-                lblNameError.Text =
-                    "Please enter your name.";
-
+                lblNameError.Text = "Please enter your first name.";
                 return;
             }
 
-            // Check if the user is trying to change
-            // their password.
+            if (string.IsNullOrWhiteSpace(lastName))
+            {
+                lblNameError.Text = "Please enter your last name.";
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                lblNameError.Text = "Please enter a username.";
+                return;
+            }
+
             bool changingPassword =
                 !string.IsNullOrEmpty(currentPassword) ||
                 !string.IsNullOrEmpty(newPassword) ||
                 !string.IsNullOrEmpty(confirmPassword);
 
-            // If any password field was filled in,
-            // all password fields are required.
             if (changingPassword)
             {
-                // Keep password section open
                 ShowPasswordSection = true;
 
                 if (string.IsNullOrEmpty(currentPassword))
                 {
                     lblPassError.Text =
                         "Please enter your current password.";
-
                     return;
                 }
 
@@ -159,7 +157,6 @@ namespace SeniorProject
                 {
                     lblPassError.Text =
                         "Please enter a new password.";
-
                     return;
                 }
 
@@ -167,7 +164,6 @@ namespace SeniorProject
                 {
                     lblPassError.Text =
                         "Please confirm your new password.";
-
                     return;
                 }
 
@@ -175,13 +171,12 @@ namespace SeniorProject
                 {
                     lblPassError.Text =
                         "The new passwords do not match.";
-
                     return;
                 }
             }
 
             string connectionString =
-                System.Configuration.ConfigurationManager
+                ConfigurationManager
                 .ConnectionStrings["SeniorProjectConnection"]
                 .ConnectionString;
 
@@ -192,84 +187,136 @@ namespace SeniorProject
                 {
                     connection.Open();
 
-                    // Get the current name and password
                     string selectQuery = @"
-                        SELECT Name, Password
+                        SELECT FirstName, LastName, Username, Password
                         FROM Users
                         WHERE Email = @Email";
 
-                    string oldName = "";
+                    string oldFirstName = "";
+                    string oldLastName = "";
+                    string oldUsername = "";
                     string storedPassword = "";
 
                     using (SqlCommand command =
                         new SqlCommand(selectQuery, connection))
                     {
-                        command.Parameters.AddWithValue(
-                            "@Email",
-                            email);
+                        command.Parameters.AddWithValue("@Email", email);
 
                         using (SqlDataReader reader =
                             command.ExecuteReader())
                         {
-                            if (reader.Read())
+                            if (!reader.Read())
                             {
-                                oldName =
-                                    reader["Name"].ToString();
+                                lblMessage.ForeColor =
+                                    System.Drawing.Color.Red;
 
-                                storedPassword =
-                                    reader["Password"].ToString();
+                                lblMessage.Text =
+                                    "Your account could not be found.";
+                                return;
+                            }
+
+                            oldFirstName =
+                                reader["FirstName"].ToString();
+
+                            oldLastName =
+                                reader["LastName"].ToString();
+
+                            oldUsername =
+                                reader["Username"].ToString();
+
+                            storedPassword =
+                                reader["Password"].ToString();
+                        }
+                    }
+
+                    if (changingPassword &&
+                        storedPassword != currentPassword)
+                    {
+                        ShowPasswordSection = true;
+
+                        lblPassError.Text =
+                            "Your current password is incorrect.";
+                        return;
+                    }
+
+                    bool firstNameChanged =
+                        oldFirstName != firstName;
+
+                    bool lastNameChanged =
+                        oldLastName != lastName;
+
+                    bool usernameChanged =
+                        oldUsername != username;
+
+                    bool passwordChanged = changingPassword;
+
+                    // Check whether another account uses this username.
+                    if (usernameChanged)
+                    {
+                        string checkUsernameQuery = @"
+                            SELECT COUNT(*)
+                            FROM Users
+                            WHERE Username = @Username
+                              AND Email <> @Email";
+
+                        using (SqlCommand command =
+                            new SqlCommand(
+                                checkUsernameQuery, connection))
+                        {
+                            command.Parameters.AddWithValue(
+                                "@Username", username);
+
+                            command.Parameters.AddWithValue(
+                                "@Email", email);
+
+                            int usernameExists =
+                                (int)command.ExecuteScalar();
+
+                            if (usernameExists > 0)
+                            {
+                                lblNameError.Text =
+                                    "That username is already taken.";
+                                return;
                             }
                         }
                     }
 
-                    // Check the current password
-                    // only if the user is changing it.
-                    if (changingPassword)
+                    // Update first name, last name, and username separately.
+                    if (firstNameChanged ||
+                        lastNameChanged ||
+                        usernameChanged)
                     {
-                        if (storedPassword != currentPassword)
-                        {
-                            ShowPasswordSection = true;
-
-                            lblPassError.Text =
-                                "Your current password is incorrect.";
-
-                            return;
-                        }
-                    }
-
-                    bool nameChanged =
-                        oldName != newName;
-
-                    bool passwordChanged =
-                        changingPassword;
-
-
-                    // Update name only if it actually changed.
-                    if (nameChanged)
-                    {
-                        string nameQuery = @"
+                        string updateProfileQuery = @"
                             UPDATE Users
-                            SET Name = @Name
+                            SET FirstName = @FirstName,
+                                LastName = @LastName,
+                                Username = @Username
                             WHERE Email = @Email";
 
                         using (SqlCommand command =
-                            new SqlCommand(nameQuery, connection))
+                            new SqlCommand(
+                                updateProfileQuery, connection))
                         {
                             command.Parameters.AddWithValue(
-                                "@Name",
-                                newName);
+                                "@FirstName", firstName);
 
                             command.Parameters.AddWithValue(
-                                "@Email",
-                                email);
+                                "@LastName", lastName);
+
+                            command.Parameters.AddWithValue(
+                                "@Username", username);
+
+                            command.Parameters.AddWithValue(
+                                "@Email", email);
 
                             command.ExecuteNonQuery();
                         }
+
+                        // Update the greeting for the current session.
+                        Session["DisplayName"] = firstName;
                     }
 
-
-                    // Update password only when
-                    // Save Changes is clicked.
+                    // Update the password only when requested.
                     if (passwordChanged)
                     {
                         string passwordQuery = @"
@@ -278,23 +325,25 @@ namespace SeniorProject
                             WHERE Email = @Email";
 
                         using (SqlCommand command =
-                            new SqlCommand(passwordQuery, connection))
+                            new SqlCommand(
+                                passwordQuery, connection))
                         {
                             command.Parameters.AddWithValue(
-                                "@Password",
-                                newPassword);
+                                "@Password", newPassword);
 
                             command.Parameters.AddWithValue(
-                                "@Email",
-                                email);
+                                "@Email", email);
 
                             command.ExecuteNonQuery();
                         }
                     }
 
+                    bool profileChanged =
+                        firstNameChanged ||
+                        lastNameChanged ||
+                        usernameChanged;
 
-                    // Show the correct message.
-                    if (nameChanged && passwordChanged)
+                    if (profileChanged && passwordChanged)
                     {
                         lblMessage.ForeColor =
                             System.Drawing.Color.Green;
@@ -302,13 +351,13 @@ namespace SeniorProject
                         lblMessage.Text =
                             "Your changes were saved successfully!";
                     }
-                    else if (nameChanged)
+                    else if (profileChanged)
                     {
                         lblMessage.ForeColor =
                             System.Drawing.Color.Green;
 
                         lblMessage.Text =
-                            "Name updated successfully!";
+                            "Profile updated successfully!";
                     }
                     else if (passwordChanged)
                     {
@@ -327,9 +376,6 @@ namespace SeniorProject
                             "No changes were made.";
                     }
 
-
-                    // Clear password fields after
-                    // a successful password change.
                     if (passwordChanged)
                     {
                         txtCurrentPassword.Text = "";
@@ -350,7 +396,6 @@ namespace SeniorProject
             }
         }
 
-
         // UPLOAD PROFILE PICTURE
         protected void btnUploadPic_Click(object sender, EventArgs e)
         {
@@ -367,13 +412,11 @@ namespace SeniorProject
 
                 lblMessage.Text =
                     "Please choose a picture first.";
-
                 return;
             }
 
             string extension =
-                Path.GetExtension(
-                    fileProfilePic.FileName).ToLower();
+                Path.GetExtension(fileProfilePic.FileName).ToLowerInvariant();
 
             if (extension != ".jpg" &&
                 extension != ".jpeg" &&
@@ -385,20 +428,16 @@ namespace SeniorProject
 
                 lblMessage.Text =
                     "Please upload a JPG, JPEG, PNG, or GIF image.";
-
                 return;
             }
 
             try
             {
-                string email =
-                    Session["UserEmail"].ToString();
+                string email = Session["UserEmail"].ToString();
 
-                string fileName =
-                    Guid.NewGuid().ToString() + extension;
+                string fileName = Guid.NewGuid().ToString() + extension;
 
-                string folderPath =
-                    Server.MapPath("~/Images/");
+                string folderPath = Server.MapPath("~/Images/");
 
                 if (!Directory.Exists(folderPath))
                 {
@@ -406,14 +445,12 @@ namespace SeniorProject
                 }
 
                 string filePath =
-                    Path.Combine(
-                        folderPath,
-                        fileName);
+                    Path.Combine(folderPath, fileName);
 
                 fileProfilePic.SaveAs(filePath);
 
                 string connectionString =
-                    System.Configuration.ConfigurationManager
+                    ConfigurationManager
                     .ConnectionStrings["SeniorProjectConnection"]
                     .ConnectionString;
 
@@ -431,15 +468,12 @@ namespace SeniorProject
                         new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue(
-                            "@ProfilePicture",
-                            fileName);
+                            "@ProfilePicture", fileName);
 
                         command.Parameters.AddWithValue(
-                            "@Email",
-                            email);
+                            "@Email", email);
 
-                        int rowsUpdated =
-                            command.ExecuteNonQuery();
+                        int rowsUpdated = command.ExecuteNonQuery();
 
                         if (rowsUpdated > 0)
                         {
@@ -473,13 +507,11 @@ namespace SeniorProject
             }
         }
 
-
         // CANCEL ACCOUNT SETTINGS
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Response.Redirect("HomePage.aspx");
         }
-
 
         // DELETE ACCOUNT
         protected void btnProceedDelete_Click(object sender, EventArgs e)
@@ -490,11 +522,10 @@ namespace SeniorProject
                 return;
             }
 
-            string email =
-                Session["UserEmail"].ToString();
+            string email = Session["UserEmail"].ToString();
 
             string connectionString =
-                System.Configuration.ConfigurationManager
+                ConfigurationManager
                 .ConnectionStrings["SeniorProjectConnection"]
                 .ConnectionString;
 
@@ -512,19 +543,15 @@ namespace SeniorProject
                     using (SqlCommand command =
                         new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue(
-                            "@Email",
-                            email);
-
+                        command.Parameters.AddWithValue("@Email", email);
                         command.ExecuteNonQuery();
                     }
 
-                    // Log the user out
                     Session.Clear();
                     Session.Abandon();
 
-                    // Send the user back to login
-                    Response.Redirect("LogInPage.aspx");
+                    Response.Redirect("LogInPage.aspx", false);
+                    Context.ApplicationInstance.CompleteRequest();
                 }
                 catch (Exception ex)
                 {
@@ -532,8 +559,7 @@ namespace SeniorProject
                         System.Drawing.Color.Red;
 
                     lblMessage.Text =
-                        "Account could not be deleted: "
-                        + ex.Message;
+                        "Account could not be deleted: " + ex.Message;
                 }
             }
         }

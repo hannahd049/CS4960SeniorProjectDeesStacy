@@ -192,45 +192,47 @@
         </div>
 
 
-        <!-- NAME -->
+        
+        <!-- FIRST NAME -->
 
-        <label
-            for="txtName"
-            style="
-                display:block;
-                margin-top:15px;
-                margin-bottom:5px;
-                font-weight:bold;
-            ">
-            Display Name:
+        <label style="display:block; margin-top:15px; margin-bottom:5px; font-weight:bold;">
+            First Name:
         </label>
 
-
         <asp:TextBox
-            ID="txtName"
+            ID="txtFirstName"
             runat="server"
             Width="100%"
-            onkeyup="clearNameError()"
-            style="
-                box-sizing:border-box;
-                padding:10px;
-                border-radius:8px;
-                border:1px solid #ccc;
-            "
-        >
-        </asp:TextBox>
+            style="box-sizing:border-box; padding:10px; border-radius:8px; border:1px solid #ccc;" />
 
+        <!-- LAST NAME -->
 
-        <asp:Label
-            ID="lblNameError"
+        <label style="display:block; margin-top:15px; margin-bottom:5px; font-weight:bold;">
+            Last Name:
+        </label>
+
+        <asp:TextBox
+            ID="txtLastName"
             runat="server"
+            Width="100%"
+            style="box-sizing:border-box; padding:10px; border-radius:8px; border:1px solid #ccc;" />
+
+        <!-- USERNAME -->
+
+        <label style="display:block; margin-top:15px; margin-bottom:5px; font-weight:bold;">
+            Username:
+        </label>
+
+        <asp:TextBox
+            ID="txtUsername"
+            runat="server"
+            Width="100%"
+            style="box-sizing:border-box; padding:10px; border-radius:8px; border:1px solid #ccc;" />
+
+        <asp:Label ID="lblNameError" runat="server"
             ForeColor="Red"
-            style="
-                font-size:13px;
-                display:block;
-                margin-top:4px;
-            "
-        />
+            Style="font-size:13px; display:block; margin-top:4px;" />
+
 
 
         <!-- EMAIL -->

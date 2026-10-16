@@ -1,3 +1,4 @@
+
 using System;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -40,58 +41,74 @@ namespace SeniorProject
             }
 
             string connectionString =
-                ConfigurationManager.ConnectionStrings["SeniorProjectConnection"].ConnectionString;
+                ConfigurationManager
+                .ConnectionStrings["SeniorProjectConnection"]
+                .ConnectionString;
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection =
+                new SqlConnection(connectionString))
             {
                 try
                 {
                     connection.Open();
 
                     string query = @"
-                        SELECT Name, Password, Role
+                        SELECT FirstName, Email, Password, Role
                         FROM Users
                         WHERE Email = @Email";
 
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command =
+                        new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Email", email);
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =
+                            command.ExecuteReader())
                         {
-
                             if (!reader.HasRows)
                             {
                                 lblPassError.ForeColor = Color.Red;
-                                lblPassError.Text = "Invalid email or password.";
+                                lblPassError.Text =
+                                    "Invalid email or password.";
                                 return;
                             }
 
                             reader.Read();
 
-                            string storedPassword = reader["Password"].ToString();
-                            string userRole = reader["Role"].ToString();
-                            string displayName = reader["Name"].ToString();
+                            string storedPassword =
+                                reader["Password"].ToString();
+
+                            string userRole =
+                                reader["Role"].ToString();
+
+                            string firstName =
+                                reader["FirstName"].ToString();
+
+                            string userEmail =
+                                reader["Email"].ToString();
 
                             if (storedPassword != password)
                             {
                                 lblPassError.ForeColor = Color.Red;
-                                lblPassError.Text = "Invalid email or password.";
+                                lblPassError.Text =
+                                    "Invalid email or password.";
                                 return;
                             }
 
-                            Session["UserEmail"] = email;
+                            Session["UserEmail"] = userEmail;
                             Session["UserRole"] = userRole;
-                            Session["DisplayName"] = displayName;   
+                            Session["DisplayName"] = firstName;
                         }
                     }
+
                     Response.Redirect("HomePage.aspx", false);
                     Context.ApplicationInstance.CompleteRequest();
                 }
                 catch (Exception ex)
                 {
                     lblMessage.ForeColor = Color.Red;
-                    lblMessage.Text = "Database error: " + ex.Message;
+                    lblMessage.Text =
+                        "Database error: " + ex.Message;
                 }
             }
         }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
+using System;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace SeniorProject
 {
@@ -13,13 +10,20 @@ namespace SeniorProject
         {
             if (!IsPostBack)
             {
-                if (Session["DisplayName"] != null)
+                if (Session["DisplayName"] != null &&
+                    Session["UserEmail"] != null)
                 {
-                    string displayName = Session["DisplayName"].ToString();
-                    string email = Session["UserEmail"].ToString(); // used to identify profile
+                    string firstName =
+                        Session["DisplayName"].ToString();
 
-                    UserGreeting.Text = "Hi, " + displayName;
-                    UserGreeting.NavigateUrl = "ViewProfile.aspx?email=" + email;
+                    string email =
+                        Session["UserEmail"].ToString();
+
+                    UserGreeting.Text = "Hi, " + firstName;
+
+                    UserGreeting.NavigateUrl =
+                        "ViewProfile.aspx?email=" +
+                        HttpUtility.UrlEncode(email);
                 }
                 else
                 {
@@ -27,17 +31,5 @@ namespace SeniorProject
                 }
             }
         }
-
-
     }
-}    
-
-
-
-
-
-
-
-
-
-
+}
