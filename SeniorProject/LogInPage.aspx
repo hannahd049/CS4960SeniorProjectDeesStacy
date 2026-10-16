@@ -104,9 +104,13 @@ function clearUserError() {
 
             <p style="margin-top: 15px; font-size: 14px; text-align: center;">
                 Not registered?
-                <a href="#" style="text-decoration: none; color: #b565a7;">
-                    Create an account
-                </a>
+                 <asp:HyperLink
+                    ID="lnkCreateAccount"
+                    runat="server"
+                    NavigateUrl="~/AccountRegistration.aspx"
+                    Text="Create an account"
+                    style="text-decoration: none; color: #b565a7;">
+                </asp:HyperLink>
             </p>
 
             <asp:Label
