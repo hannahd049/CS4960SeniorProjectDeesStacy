@@ -513,6 +513,12 @@ namespace SeniorProject
             Response.Redirect("HomePage.aspx");
         }
 
+        protected void btnSaveProfile_Click(object sender, EventArgs e)
+        {
+            lblMessage.ForeColor = System.Drawing.Color.Green;
+            lblMessage.Text = "Profile saved successfully!";
+        
+        }
         // DELETE ACCOUNT
         protected void btnProceedDelete_Click(object sender, EventArgs e)
         {
