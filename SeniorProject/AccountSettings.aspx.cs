@@ -188,7 +188,7 @@ namespace SeniorProject
                     connection.Open();
 
                     string selectQuery = @"
-                        SELECT FirstName, LastName, Username, Password
+                        SELECT FirstName, LastName, Username, PasswordHash
                         FROM Users
                         WHERE Email = @Email";
 
@@ -225,7 +225,7 @@ namespace SeniorProject
                                 reader["Username"].ToString();
 
                             storedPassword =
-                                reader["Password"].ToString();
+                                reader["PasswordHash"].ToString();
                         }
                     }
 
