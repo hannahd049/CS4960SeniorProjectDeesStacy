@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Web;
 using System.Web.UI;
+using System.Web.Helpers;
 
 namespace SeniorProject
 {
@@ -26,7 +27,8 @@ namespace SeniorProject
             string lastName = LnameTB.Text.Trim();
             string username = txtUsername.Text.Trim();
             string email = txtEmail.Text.Trim();
-            string password = txtPassword.Text;
+            string passwordHash =
+                Crypto.HashPassword(txtPassword.Text);
 
             string connectionString =
                 ConfigurationManager
@@ -67,9 +69,9 @@ namespace SeniorProject
                     // Save first name and last name separately
                     string insertQuery = @"
                         INSERT INTO Users
-                            (FirstName, LastName, Username, Email, Password, Role)
+                            (FirstName, LastName, Username, Email, PasswordHash, Role)
                         VALUES
-                            (@FirstName, @LastName, @Username, @Email, @Password, @Role)";
+                            (@FirstName, @LastName, @Username, @Email, @PasswordHash, @Role)";
 
                     using (SqlCommand command =
                         new SqlCommand(insertQuery, connection))
@@ -87,7 +89,7 @@ namespace SeniorProject
                             "@Email", email);
 
                         command.Parameters.AddWithValue(
-                            "@Password", password);
+                             "@PasswordHash", passwordHash);
 
                         command.Parameters.AddWithValue(
                             "@Role", "User");
@@ -98,13 +100,12 @@ namespace SeniorProject
                     Response.Redirect("LogInPage.aspx", false);
                     Context.ApplicationInstance.CompleteRequest();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    ShowMessage(
-                        "Your account could not be created. Please try again.");
+                    ShowMessage(ex.ToString());
                 }
             }
-        }
+                            }
 
         private void ShowMessage(string message)
         {

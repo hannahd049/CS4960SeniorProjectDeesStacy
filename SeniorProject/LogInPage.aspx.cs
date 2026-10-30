@@ -1,8 +1,8 @@
-
 using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Web.Helpers;
 using System.Web.UI;
 
 namespace SeniorProject
@@ -53,7 +53,13 @@ namespace SeniorProject
                     connection.Open();
 
                     string query = @"
-                        SELECT FirstName, Email, Password, Role
+                        SELECT
+                            UserID,
+                            Username,
+                            FirstName,
+                            Email,
+                            PasswordHash,
+                            Role
                         FROM Users
                         WHERE Email = @Email";
 
@@ -75,8 +81,24 @@ namespace SeniorProject
 
                             reader.Read();
 
-                            string storedPassword =
-                                reader["Password"].ToString();
+                            string storedHash =
+                                reader["PasswordHash"].ToString();
+
+                            if (!Crypto.VerifyHashedPassword(
+                                    storedHash,
+                                    password))
+                            {
+                                lblPassError.ForeColor = Color.Red;
+                                lblPassError.Text =
+                                    "Invalid email or password.";
+                                return;
+                            }
+
+                            int userId =
+                                Convert.ToInt32(reader["UserID"]);
+
+                            string username =
+                                reader["Username"].ToString();
 
                             string userRole =
                                 reader["Role"].ToString();
@@ -87,28 +109,32 @@ namespace SeniorProject
                             string userEmail =
                                 reader["Email"].ToString();
 
-                            if (storedPassword != password)
-                            {
-                                lblPassError.ForeColor = Color.Red;
-                                lblPassError.Text =
-                                    "Invalid email or password.";
-                                return;
-                            }
+                            Session["UserID"] = userId;
+
+                            Session["Username"] = username;
 
                             Session["UserEmail"] = userEmail;
+
                             Session["UserRole"] = userRole;
+
                             Session["DisplayName"] = firstName;
                         }
                     }
 
-                    Response.Redirect("HomePage.aspx", false);
-                    Context.ApplicationInstance.CompleteRequest();
+                    Response.Redirect(
+                        "HomePage.aspx",
+                        false);
+
+                    Context.ApplicationInstance
+                        .CompleteRequest();
                 }
                 catch (Exception ex)
                 {
                     lblMessage.ForeColor = Color.Red;
+
                     lblMessage.Text =
-                        "Database error: " + ex.Message;
+                        "Database error: " +
+                        ex.Message;
                 }
             }
         }
