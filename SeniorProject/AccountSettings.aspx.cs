@@ -42,7 +42,7 @@ namespace SeniorProject
 
                     string query = @"
                         SELECT FirstName, LastName, Username,
-                               Email, ProfilePicture
+                               Email, ProfilePicture, ProfileBanner, Major, AcademicYear, Bio, Status
                         FROM Users
                         WHERE Email = @Email";
 
@@ -67,6 +67,19 @@ namespace SeniorProject
 
                                 lblEmail.Text =
                                     reader["Email"].ToString();
+
+                                ddlMajor.SelectedValue = Convert.ToString(reader["Major"]);
+                                ddlYear.SelectedValue = Convert.ToString(reader["AcademicYear"]);
+                                txtBio.Text = Convert.ToString(reader["Bio"]);
+                                txtStatus.Text = Convert.ToString(reader["Status"]);
+
+                                string bannerFile = Path.GetFileName(Convert.ToString(reader["ProfileBanner"]));
+                                if (!string.IsNullOrWhiteSpace(bannerFile) &&
+                                    File.Exists(Server.MapPath("~/Images/" + bannerFile)))
+                                {
+                                    imgBanner.ImageUrl = "~/Images/" + bannerFile;
+                                    imgBanner.Visible = true;
+                                }
 
                                 string profilePicture =
                                     reader["ProfilePicture"].ToString();
@@ -515,10 +528,109 @@ namespace SeniorProject
 
         protected void btnSaveProfile_Click(object sender, EventArgs e)
         {
-            lblMessage.ForeColor = System.Drawing.Color.Green;
-            lblMessage.Text = "Profile saved successfully!";
-        
+            if (Session["UserEmail"] == null)
+            {
+                Response.Redirect("LogInPage.aspx");
+                return;
+            }
+
+            string connectionString = ConfigurationManager.ConnectionStrings["SeniorProjectConnection"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlCommand command = new SqlCommand(@"
+                UPDATE Users SET Major=@Major, AcademicYear=@Year, Bio=@Bio, Status=@Status
+                WHERE Email=@Email", connection))
+            {
+                command.Parameters.AddWithValue("@Major", ddlMajor.SelectedValue);
+                command.Parameters.AddWithValue("@Year", ddlYear.SelectedValue);
+                command.Parameters.AddWithValue("@Bio", txtBio.Text.Trim());
+                command.Parameters.AddWithValue("@Status", txtStatus.Text.Trim());
+                command.Parameters.AddWithValue("@Email", Session["UserEmail"].ToString());
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    lblProfileMessage.ForeColor = System.Drawing.Color.Green;
+                    lblProfileMessage.Text = "Profile saved successfully!";
+                }
+                catch (Exception ex)
+                {
+                    lblProfileMessage.ForeColor = System.Drawing.Color.Red;
+                    lblProfileMessage.Text = "Could not save profile: " + ex.Message;
+                }
+            }
         }
+
+        protected void btnUploadBanner_Click(object sender, EventArgs e)
+        {
+            if (Session["UserEmail"] == null)
+            {
+                Response.Redirect("LogInPage.aspx");
+                return;
+            }
+            if (!fileBanner.HasFile)
+            {
+                lblProfileMessage.Text = "Please choose a banner image.";
+                return;
+            }
+
+            string extension = Path.GetExtension(fileBanner.FileName).ToLowerInvariant();
+            if (extension != ".jpg" && extension != ".jpeg" &&
+                extension != ".png" && extension != ".gif" && extension != ".webp")
+            {
+                lblProfileMessage.Text = "Please upload a JPG, PNG, GIF or WebP image.";
+                return;
+            }
+            if (fileBanner.PostedFile.ContentLength > 5 * 1024 * 1024)
+            {
+                lblProfileMessage.Text = "Banner must be 5 MB or smaller.";
+                return;
+            }
+
+            try
+            {
+                // Verify image bytes, not just the filename extension.
+                byte[] bytes = fileBanner.FileBytes;
+                bool isJpeg = bytes.Length >= 3 && bytes[0] == 0xFF && bytes[1] == 0xD8 && bytes[2] == 0xFF;
+                bool isPng = bytes.Length >= 8 && bytes[0] == 0x89 && bytes[1] == 0x50 && bytes[2] == 0x4E && bytes[3] == 0x47;
+                bool isGif = bytes.Length >= 6 && bytes[0] == 0x47 && bytes[1] == 0x49 && bytes[2] == 0x46;
+                bool isWebp = bytes.Length >= 12 && bytes[0] == 0x52 && bytes[1] == 0x49 && bytes[2] == 0x46 &&
+                    bytes[3] == 0x46 && bytes[8] == 0x57 && bytes[9] == 0x45 && bytes[10] == 0x42 && bytes[11] == 0x50;
+                bool valid = ((extension == ".jpg" || extension == ".jpeg") && isJpeg) ||
+                    (extension == ".png" && isPng) || (extension == ".gif" && isGif) ||
+                    (extension == ".webp" && isWebp);
+                if (!valid)
+                {
+                    lblProfileMessage.Text = "The selected file is not a valid image.";
+                    return;
+                }
+
+                string name = Guid.NewGuid().ToString("N") + extension;
+                string folder = Server.MapPath("~/Images/");
+                Directory.CreateDirectory(folder);
+                fileBanner.SaveAs(Path.Combine(folder, name));
+
+                string connectionString = ConfigurationManager.ConnectionStrings["SeniorProjectConnection"].ConnectionString;
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlCommand command = new SqlCommand(
+                    "UPDATE Users SET ProfileBanner=@Banner WHERE Email=@Email", connection))
+                {
+                    command.Parameters.AddWithValue("@Banner", name);
+                    command.Parameters.AddWithValue("@Email", Session["UserEmail"].ToString());
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                imgBanner.ImageUrl = "~/Images/" + name;
+                imgBanner.Visible = true;
+                lblProfileMessage.ForeColor = System.Drawing.Color.Green;
+                lblProfileMessage.Text = "Banner updated successfully!";
+            }
+            catch (Exception ex)
+            {
+                lblProfileMessage.ForeColor = System.Drawing.Color.Red;
+                lblProfileMessage.Text = "Banner upload failed: " + ex.Message;
+            }
+        }
+
         // DELETE ACCOUNT
         protected void btnProceedDelete_Click(object sender, EventArgs e)
         {

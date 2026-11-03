@@ -27,6 +27,8 @@ namespace SeniorProject
             string lastName = LnameTB.Text.Trim();
             string username = txtUsername.Text.Trim();
             string email = txtEmail.Text.Trim();
+
+            // Hash the password before saving it
             string passwordHash =
                 Crypto.HashPassword(txtPassword.Text);
 
@@ -42,7 +44,8 @@ namespace SeniorProject
                 {
                     connection.Open();
 
-                    // Check whether the email or username already exists
+                    // Check whether the email or username
+                    // already exists in the database
                     string checkQuery = @"
                         SELECT COUNT(*)
                         FROM Users
@@ -52,11 +55,14 @@ namespace SeniorProject
                     using (SqlCommand command =
                         new SqlCommand(checkQuery, connection))
                     {
-                        command.Parameters.AddWithValue("@Email", email);
-                        command.Parameters.AddWithValue("@Username", username);
+                        command.Parameters.AddWithValue(
+                            "@Email", email);
+
+                        command.Parameters.AddWithValue(
+                            "@Username", username);
 
                         int accountExists =
-                            (int)command.ExecuteScalar();
+                            Convert.ToInt32(command.ExecuteScalar());
 
                         if (accountExists > 0)
                         {
@@ -66,12 +72,29 @@ namespace SeniorProject
                         }
                     }
 
-                    // Save first name and last name separately
+                    // Create the account and automatically
+                    // save the Member Since date
                     string insertQuery = @"
                         INSERT INTO Users
-                            (FirstName, LastName, Username, Email, PasswordHash, Role)
+                        (
+                            FirstName,
+                            LastName,
+                            Username,
+                            Email,
+                            PasswordHash,
+                            Role,
+                            CreatedAt
+                        )
                         VALUES
-                            (@FirstName, @LastName, @Username, @Email, @PasswordHash, @Role)";
+                        (
+                            @FirstName,
+                            @LastName,
+                            @Username,
+                            @Email,
+                            @PasswordHash,
+                            @Role,
+                            SYSDATETIME()
+                        )";
 
                     using (SqlCommand command =
                         new SqlCommand(insertQuery, connection))
@@ -89,15 +112,20 @@ namespace SeniorProject
                             "@Email", email);
 
                         command.Parameters.AddWithValue(
-                             "@PasswordHash", passwordHash);
+                            "@PasswordHash", passwordHash);
 
                         command.Parameters.AddWithValue(
                             "@Role", "User");
 
+                        // CreatedAt is automatically generated
+                        // by SQL Server using SYSDATETIME()
+
                         command.ExecuteNonQuery();
                     }
 
+                    // Redirect to login after registration
                     Response.Redirect("LogInPage.aspx", false);
+
                     Context.ApplicationInstance.CompleteRequest();
                 }
                 catch (Exception ex)
@@ -105,7 +133,7 @@ namespace SeniorProject
                     ShowMessage(ex.ToString());
                 }
             }
-                            }
+        }
 
         private void ShowMessage(string message)
         {

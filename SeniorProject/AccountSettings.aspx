@@ -79,6 +79,12 @@
             color: #bd4d79;
         }
 
+        .settings-back-link {
+            margin-top: 22px;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
         .sidebar-icon {
             font-size: 19px;
         }
@@ -452,6 +458,7 @@
                 width: 100%;
             }
         }
+        .profile-banner-preview{display:block;width:100%;height:175px;object-fit:cover;border-radius:14px;margin:0 0 20px;background:#f5dbe7}
     </style>
 
     <script>
@@ -565,7 +572,7 @@
     <input type="hidden"
         id="activeTab"
         name="activeTab"
-        value="accountTab" />
+        value="<%= Request.Form["activeTab"] == "profileTab" ? "profileTab" : "accountTab" %>" />
 
     <div class="settings-layout">
 
@@ -595,6 +602,10 @@
                 </button>
             </nav>
 
+            <a href="HomePage.aspx" class="sidebar-link settings-back-link">
+                Back
+            </a>
+
         </aside>
 
         <main class="settings-content">
@@ -610,68 +621,6 @@
                         and keep your account secure.
                     </p>
                 </div>
-
-                <!-- PROFILE PICTURE -->
-
-                <section class="settings-card">
-
-                    <div class="card-heading">
-                        <span class="card-icon">♡</span>
-                        <div>
-                            <h2>Profile Picture</h2>
-                            <p>Choose how your profile appears.</p>
-                        </div>
-                    </div>
-
-                    <div class="avatar-row">
-
-                        <asp:Image
-                            ID="imgProfile"
-                            runat="server"
-                            CssClass="profile-avatar"
-                            ImageUrl="~/Images/default-avatar.png" />
-
-                        <div class="avatar-copy">
-                            <h3>Your photo</h3>
-
-                            <p>
-                                Upload a picture to personalize
-                                your account.
-                            </p>
-
-                            <asp:Button
-                                ID="btnShowPicture"
-                                runat="server"
-                                Text="Change Picture"
-                                CssClass="soft-button"
-                                UseSubmitBehavior="false"
-                                OnClientClick="showPictureSection(); return false;" />
-                        </div>
-
-                    </div>
-
-                    <div id="pictureSection"
-                        class="expand-panel"
-                        style="display:none;">
-
-                        <div class="field">
-                            <label>Choose a new picture</label>
-
-                            <asp:FileUpload
-                                ID="fileProfilePic"
-                                runat="server" />
-                        </div>
-
-                        <asp:Button
-                            ID="btnUploadPic"
-                            runat="server"
-                            Text="Upload Picture"
-                            CssClass="primary-button"
-                            OnClick="btnUploadPic_Click" />
-
-                    </div>
-
-                </section>
 
                 <!-- PERSONAL INFORMATION -->
 
@@ -809,7 +758,7 @@
                         </div>
 
                         <p class="helper">
-                            Click Save Changes to update your password.
+                            Click Save Account to update your password.
                         </p>
 
                     </div>
@@ -821,17 +770,9 @@
                 <div class="actions">
 
                     <asp:Button
-                        ID="btnCancel"
-                        runat="server"
-                        Text="Cancel Changes"
-                        CssClass="outline-button"
-                        CausesValidation="false"
-                        OnClick="btnCancel_Click" />
-
-                    <asp:Button
                         ID="btnSave"
                         runat="server"
-                        Text="Save Changes"
+                        Text="Save Account"
                         CssClass="primary-button"
                         OnClick="btnSave_Click" />
 
@@ -882,6 +823,85 @@
                         student social profile.
                     </p>
                 </div>
+
+
+                <asp:Label ID="lblProfileMessage" runat="server" CssClass="status-message" />
+                <!-- PROFILE PICTURE -->
+
+                <section class="settings-card">
+
+                    <div class="card-heading">
+                        <span class="card-icon">♡</span>
+                        <div>
+                            <h2>Profile Picture</h2>
+                            <p>Choose how your profile appears.</p>
+                        </div>
+                    </div>
+
+                    <div class="avatar-row">
+
+                        <asp:Image
+                            ID="imgProfile"
+                            runat="server"
+                            CssClass="profile-avatar"
+                            ImageUrl="~/Images/default-avatar.png" />
+
+                        <div class="avatar-copy">
+                            <h3>Your photo</h3>
+
+                            <p>
+                                Upload a picture to personalize
+                                your account.
+                            </p>
+
+                            <asp:Button
+                                ID="btnShowPicture"
+                                runat="server"
+                                Text="Change Picture"
+                                CssClass="soft-button"
+                                UseSubmitBehavior="false"
+                                OnClientClick="showPictureSection(); return false;" />
+                        </div>
+
+                    </div>
+
+                    <div id="pictureSection"
+                        class="expand-panel"
+                        style="display:none;">
+
+                        <div class="field">
+                            <label>Choose a new picture</label>
+
+                            <asp:FileUpload
+                                ID="fileProfilePic"
+                                runat="server" />
+                        </div>
+
+                        <asp:Button
+                            ID="btnUploadPic"
+                            runat="server"
+                            Text="Upload Picture"
+                            CssClass="primary-button"
+                            OnClick="btnUploadPic_Click" />
+
+                    </div>
+
+                </section>
+
+
+                <!-- PROFILE BANNER -->
+                <section class="settings-card">
+                    <div class="card-heading"><span class="card-icon">▧</span>
+                        <div><h2>Profile Banner</h2><p>This banner appears at the top of your profile in Channels.</p></div>
+                    </div>
+                    <asp:Image ID="imgBanner" runat="server" CssClass="profile-banner-preview" Visible="false" />
+                    <div class="field"><label>Choose a banner image</label>
+                        <asp:FileUpload ID="fileBanner" runat="server" />
+                        <p class="helper">JPG, PNG, GIF or WebP. Maximum 5 MB.</p>
+                    </div>
+                    <asp:Button ID="btnUploadBanner" runat="server" Text="Upload Banner"
+                        CssClass="primary-button" OnClick="btnUploadBanner_Click" />
+                </section>
 
                 <!-- ACADEMIC INFORMATION -->
 
