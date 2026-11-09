@@ -1,4 +1,4 @@
-# CS4960 Senior Project — GirlTalk Connect: Building Meaningful STEM Relationships
+# CS4960 Senior Project — GirlTalk Connect: Where Women in STEM Connect
 
 ### Senior Project Repository  
 **Instructor:** Dr. Stephanos  
